@@ -1,0 +1,15 @@
+<% provide(:title, 'Calendar') %>
+<% provide(:page, 'Calendar') %>
+
+<section class="calendar">
+  <div class="section-header">
+    <h2>Calendar</h2>
+  </div>
+
+  <div class="calendar-wrapper">
+
+    <%= calendar(@month, @year) %>
+
+  </div>
+
+</section>

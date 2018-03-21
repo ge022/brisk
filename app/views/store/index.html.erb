@@ -1,0 +1,50 @@
+<% provide(:title, 'Store') %>
+<% provide(:page, 'Products')  %>
+
+<section class="products">
+
+  <div class="section-header">
+    <h2>Store</h2>
+  </div>
+
+  <% if current_user.try(:admin?) %>
+    <%= link_to 'Products', products_path, class: 'button' %>
+  <% end %>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Quantity on hand</th>
+        <th>Selling price</th>
+        <th>Cost of product</th>
+        <th>Shipping weight</th>
+        <th>Image thumbnail</th>
+        <th>Image full</th>
+        <th>Rating</th>
+        <th>&nbsp;</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @products.each do |product| %>
+        <tr>
+          <td><%= product.name %></td>
+          <td><%= product.description.html_safe %></td>
+          <td><%= product.quantity_on_hand %></td>
+          <td><%= product.selling_price %></td>
+          <td><%= product.cost_of_product %></td>
+          <td><%= product.shipping_weight %></td>
+          <td><%= product.image_thumbnail.truncate(20) %></td>
+          <td><%= product.image_full.truncate(20) %></td>
+          <td><%= ((image_tag 'fork.png', size: '20x20') * product.product_reviews.average(:rating)).html_safe %></td>
+          <td><%= link_to 'Show', store_show_path(product.id) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= paginate @products %>
+
+</section>

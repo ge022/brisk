@@ -1,0 +1,19 @@
+<% provide(:title, "Edit #{@article.title}") %>
+<% provide(:page, 'Articles')  %>
+
+<section class="edit">
+
+  <div class="section-header">
+    <h2>Editing: <%= @article.title %></h2>
+  </div>
+
+  <div class="form-wrapper">
+
+    <%= render 'form', article: @article %>
+
+    <%= link_to 'Show', @article, class: 'button' %>
+    <%= link_to 'Back', articles_path, class: 'button' %>
+
+  </div>
+
+</section>

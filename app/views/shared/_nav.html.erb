@@ -1,0 +1,72 @@
+<nav id="site-navigation" class="main-navigation" aria-labelledby="site-navigation-label"
+     itemscope="" itemtype="https://schema.org/SiteNavigationElement">
+
+  <h2 class="screen-reader-text" id="site-navigation-label">Primary Menu</h2>
+
+
+  <div id="main-navigation-inner" class="main-navigation-inner">
+
+    <div class="menu">
+      <ul role="menu">
+        <%- # nav_link_to is in ApplicationHelper %>
+        <li class="menu-item" role="menuitem">
+          <%= nav_link_to 'Home', root_path %>
+        </li>
+        <li class="menu-item" role="menuitem">
+          <%= nav_link_to 'Restaurants', restaurants_url_path %>
+        </li>
+        <li class="menu-item" role="menuitem">
+          <%= nav_link_to 'Products', store_path %>
+        </li>
+        <li class="menu-item" role="menuitem">
+          <%= nav_link_to 'Blog', blogs_path %>
+        </li>
+        <li class="menu-item" role="menuitem">
+          <%= nav_link_to 'Articles', articles_url_path %>
+        </li>
+        <li class="menu-item" role="menuitem">
+          <%= nav_link_to 'Calendar', calendar_path %>
+        </li>
+        <li class="menu-item" role="menuitem">
+          <%= nav_link_to 'Contact Us', contact_us_path %>
+        </li>
+        <li class="menu-item" role="menuitem">
+          <%= nav_link_to 'Puzzle', new_puzzle_path %>
+        </li>
+
+        <% if user_signed_in? %>
+
+          <li class="menu-item menu-item-has-children" role="menuitem">
+
+            <%= link_to('Logout <span class="expander" aria-hidden="true"></span>'.html_safe, destroy_user_session_path, method: :delete) %>
+
+            <ul class="sub-menu" role="menu">
+              <li class="menu-item" role="menuitem">
+                <%= nav_link_to 'Preferences', preferences_path %>
+              </li>
+            </ul>
+
+          </li>
+
+          <li>
+            Welcome, <%= current_user.name %>
+          </li>
+        <% else %>
+
+          <li class="menu-item" role="menuitem">
+            <%= nav_link_to('Login', new_user_session_path) %>
+          </li>
+          <li class="menu-item" role="menuitem">
+            <%= nav_link_to('Register', new_user_registration_path) %>
+          </li>
+
+        <% end %>
+
+      </ul>
+    </div>
+
+  </div>
+
+  <button id="menu-toggle" class="menu-toggle" aria-controls="site-navigation" aria-expanded="true">Menu</button>
+
+</nav>

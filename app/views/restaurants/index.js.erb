@@ -1,0 +1,4 @@
+$(function() {
+  $('#restaurants').html("<%= escape_javascript( render('restaurants') ) %>");
+  $('#paginate-restaurants').html("<%= escape_javascript( paginate @restaurants, remote: true ).to_s %>");
+});

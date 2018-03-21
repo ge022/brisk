@@ -1,0 +1,21 @@
+<%= form_with(model: puzzle, local: true) do |form| %>
+
+  <div class="field">
+    <%= form.label :puzzle_name %>
+    <%= form.text_field :puzzle_name, id: :puzzle_name, placeholder: 'required', class: 'fullwidth' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :word_list, 'Word list (one per line or separated by space)' %>
+    <%= form.text_area :word_list, rows: 5, id: :word_list, placeholder: 'required', class: 'fullwidth' %>
+  </div>
+  
+  <div class="field">
+    <%= form.label :size, 'Puzzle size' %>
+    <%= form.number_field :size, min: 1, class: 'fullwidth', value: '45', placeholder: 'required' %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit 'Create' %>
+  </div>
+<% end %>

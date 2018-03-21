@@ -1,0 +1,51 @@
+<%= form_with(model: restaurant, local: true) do |form| %>
+  <% if restaurant.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(restaurant.errors.count, "error") %> prohibited this restaurant from being saved:</h2>
+
+      <ul>
+      <% restaurant.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name, id: :restaurant_name, class: 'fullwidth' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :location %>
+    <%= form.text_area :location, id: :restaurant_location, class: 'fullwidth' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :cuisine %>
+    <%= form.text_field :cuisine, id: :restaurant_cuisine, class: 'fullwidth' %>
+  </div>
+  <div class="field">
+    <%= form.label :image %>
+    <%= form.text_field :image, id: :restaurant_image, class: 'fullwidth' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :low_price_range %>
+    <%= form.text_field :low_price_range, id: :restaurant_low_price_range, class: 'fullwidth' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :high_price_range %>
+    <%= form.text_field :high_price_range, id: :restaurant_high_price_range, class: 'fullwidth' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tags %>
+    <%= form.text_area :tags, id: :restaurant_tags, class: 'fullwidth' %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

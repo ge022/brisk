@@ -1,0 +1,45 @@
+<%= form_with(model: blog, local: true) do |form| %>
+  <% if blog.errors.any? %>
+    <div id="error_explanation">
+      <h4><%= pluralize(blog.errors.count, "error") %> prohibited this blog from being saved:</h4>
+
+      <ul>
+        <% blog.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :title %>
+    <%= form.text_field :title, id: :blog_title, placeholder: 'required', class: 'fullwidth' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :author %>
+    <%= form.text_field :author, id: :blog_author, placeholder: 'required', class: 'fullwidth' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :content %>
+    <%= form.text_area :content, id: :blog_content, placeholder: 'required', class: 'fullwidth tinymce' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :published_date, class: 'fullwidth' %>
+    <%= form.datetime_local_field :published_date, placeholder: 'required', id: :blog_published_date,
+                                  value: (DateTime.now.strftime('%Y-%m-%dT%R') if @blog.published_date.nil?) %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+    <%= link_to 'Back', if @blog
+                          @blog
+                        else
+                          blogs_path
+                        end, class: 'button' %>
+
+  </div>
+
+<% end %>

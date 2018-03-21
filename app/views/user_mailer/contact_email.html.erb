@@ -1,0 +1,13 @@
+<h4>Contact request from <%= @name %></h4>
+<ul>
+  <li>Email: <%= @email %></li>
+  <li>Phone: <%= @phone %> </li>
+  <li>Preferred contact method: <%= if @to
+                                      @to
+                                    else 'email' end %></li>
+  <li>Asking about: <%= @selected_product %></li>
+  <li>Newsletter: <%= @newsletter %></li>
+  <li>Notifications: <%= @notifications %></li>
+</ul>
+<h5>Question:</h5>
+<p><%= @question %></p>

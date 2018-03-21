@@ -1,0 +1,23 @@
+<% provide(:title, 'Restaurants') %>
+<% provide(:page, 'Restaurants')  %>
+
+<section class="restaurants">
+
+  <div class="section-header">
+    <h2>Restaurants</h2>
+  </div>
+
+  <% if current_user.try(:admin?) %>
+    <%= link_to 'New Restaurant', new_restaurant_path, class: 'button' %>
+  <% end %>
+
+  <div class="table-wrapper" id="restaurants">
+    <%= render 'restaurants' %>
+  </div>
+
+  <div id="paginate-restaurants">
+    <%= paginate @restaurants, remote: true %>
+  </div>
+
+
+</section>

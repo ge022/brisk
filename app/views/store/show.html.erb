@@ -1,0 +1,111 @@
+<% provide(:title, @product.name) %>
+<% provide(:page, 'Products')  %>
+
+<section class="product">
+
+  <div class="section-header">
+    <h2><%= @product.name %></h2>
+    <p>
+      Rated: <%= ((image_tag 'fork.png', size: '20x20') * @product.product_reviews.average(:rating)).html_safe %>
+    </p>
+  </div>
+
+  <div class="details-container">
+
+    <p>
+      <strong>Description:</strong>
+      <%= @product.description.html_safe %>
+    </p>
+
+    <p>
+      <strong>Quantity on hand:</strong>
+      <%= @product.quantity_on_hand %>
+    </p>
+
+    <p>
+      <strong>Selling price:</strong>
+      <%= number_to_currency @product.selling_price %>
+    </p>
+
+    <p>
+      <strong>Cost of product:</strong>
+      <%= number_to_currency @product.cost_of_product %>
+    </p>
+
+    <p>
+      <strong>Shipping weight:</strong>
+      <%= @product.shipping_weight.to_s + ' Kg' %>
+    </p>
+
+    <p>
+      <strong>Image thumbnail:</strong>
+      <br>
+      <%= image_tag @product.image_thumbnail %>
+    </p>
+
+    <p>
+      <strong>Image full:</strong>
+      <br>
+      <%= image_tag @product.image_full %>
+    </p>
+
+    <p>
+      <%= link_to 'Back', store_path, class: 'button' %>
+    </p>
+
+    <div>
+      <strong>Reviews:</strong>
+      <% @product.product_reviews.each do |review| %>
+        <p>
+          By: <%= review.author %><br>
+          Rating: <%= ((image_tag 'fork.png', size: '20x20') * review.rating).html_safe %><br>
+          <%= review.comment %><br>
+          Posted <%= time_ago_in_words review.created_at %> ago<br>
+          <% if current_user.try(:admin) %>
+            <%= link_to 'Remove', product_product_review_path(@product, review), method: :delete, data: {confirm: 'Are you sure?'} %>
+          <% end %>
+        </p>
+      <% end %>
+    </div>
+
+    <% if user_signed_in? %>
+
+
+      <div class="reviews">
+
+        <%= form_for [@product, @product.product_reviews.build] do |form| %>
+
+          <div class="field">
+            <%= form.label :author %>
+            <%= form.text_field :author, id: :author, class: 'fullwidth' %>
+          </div>
+
+          <div class="field">
+            <%= form.label :comment %>
+            <%= form.text_area :comment, id: :comment, class: 'fullwidth' %>
+          </div>
+
+          <div class="field">
+            <%= form.label :rating, class: 'fullwidth' %>
+            <%= form.select 'rating', options_for_select((1..10)), include_blank: true %>
+          </div>
+
+          <div class="field">
+            <%= form.hidden_field :product_id %>
+          </div>
+
+          <div class="actions">
+            <%= form.submit %>
+          </div>
+
+        <% end %>
+
+      </div>
+
+    <% end %>
+
+    <%= link_to 'Back', store_path, class: 'button' %>
+
+  </div>
+
+</section>

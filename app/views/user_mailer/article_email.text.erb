@@ -1,0 +1,8 @@
+Title:
+<%= @article.title %>
+
+  Author: <%= @article.author %>
+  Published on: <%= @article.published_date.strftime('%m/%d/%Y at %I:%M %p') %>
+
+Content:
+<%= strip_tags @article.content %>

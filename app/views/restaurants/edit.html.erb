@@ -1,0 +1,20 @@
+<% provide(:title, "Edit #{@restaurant.name}") %>
+<% provide(:page, 'Restaurants')  %>
+
+<section class="edit">
+
+  <div class="section-header">
+    <h2>Editing: <%= @restaurant.name %></h2>
+  </div>
+
+  <div class="form-wrapper">
+
+    <%= render 'form', restaurant: @restaurant %>
+
+    <%= link_to 'Back', restaurants_path, class: 'button' %>
+    <%= link_to 'Show', @restaurant, class: 'button' %>
+
+  </div>
+
+
+</section>

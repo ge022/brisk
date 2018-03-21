@@ -1,0 +1,19 @@
+<% provide(:title, "Edit #{@product.name}") %>
+<% provide(:page, 'Products')  %>
+
+<section class="edit">
+
+  <div class="section-header">
+    <h2>Editing: <%= @product.name %></h2>
+  </div>
+
+  <div class="form-wrapper">
+
+    <%= render 'form', product: @product %>
+
+    <%= link_to 'Back', products_path, class: 'button' %>
+    <%= link_to 'Show', @product, class: 'button' %>
+
+  </div>
+
+</section>

@@ -1,0 +1,7 @@
+<h4><%= @article.title %></h4>
+<p>
+  Author: <%= @article.author %>
+  Published on: <%= time_tag @article.published_date, format: '%m/%d/%Y at %I:%M %p' %>
+  <img src="<%= @article.avatar_thumbnail %>" alt="<%= @article.title %>">
+</p>
+<p><%= @article.content.html_safe %></p>

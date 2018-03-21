@@ -1,0 +1,104 @@
+<%= tinymce %>
+<% provide(:title, @restaurant.name) %>
+<% provide(:page, 'Restaurants')  %>
+
+<section class="restaurant">
+
+  <div class="section-header">
+    <h2><%= @restaurant.name %></h2>
+    <% if @restaurant.reviews.any? %>
+      <p>
+        Rated: <%= ((image_tag 'fork.png', size: '20x20') * @restaurant.reviews.average(:rating)).html_safe %>
+      </p>
+    <% end %>
+  </div>
+
+  <div class="details-container">
+
+    <p>
+      <strong>Location:</strong>
+      <%= @restaurant.location %>
+    </p>
+
+    <p>
+      <strong>Cuisine:</strong>
+      <%= @restaurant.cuisine %>
+    </p>
+    <p>
+      <strong>Image:</strong>
+      <br>
+      <%= image_tag @restaurant.image %>
+    </p>
+
+    <p>
+      <strong>Low price range:</strong>
+      <%= number_to_currency @restaurant.low_price_range %>
+    </p>
+
+    <p>
+      <strong>High price range:</strong>
+      <%= number_to_currency @restaurant.high_price_range %>
+    </p>
+
+    <p>
+      <strong>Tags:</strong>
+      <%= @restaurant.tags %>
+    </p>
+
+    <div>
+      <strong>Reviews:</strong>
+      <% @restaurant.reviews.each do |review| %>
+        <p>
+          By: <%= review.name %><br>
+          Rating: <%= ((image_tag 'fork.png', size: '20x20') * review.rating).html_safe %><br>
+          <%= review.review_text.html_safe %><br>
+          Date: <%= time_ago_in_words review.created_at %><br>
+          <% if current_user.try(:admin) %>
+            <%= link_to 'Remove', restaurant_review_path(@restaurant, review), method: :delete, data: {confirm: 'Are you sure?'} %>
+          <% end %>
+        </p>
+      <% end %>
+    </div>
+
+    <% if user_signed_in? %>
+
+      <div class="reviews">
+
+        <%= form_for [@restaurant, @restaurant.reviews.build] do |form| %>
+          <div class="field">
+            <%= form.label :name %>
+            <%= form.text_field :name, id: :review_name, class: 'fullwidth' %>
+          </div>
+
+          <div class="field">
+            <%= form.label :review_text %>
+            <%= form.text_area :review_text, id: :review_review_text, class: 'fullwidth tinymce' %>
+          </div>
+
+          <div class="field">
+            <%= form.label :rating %>
+            <%= form.number_field :rating, id: :review_rating, class: 'fullwidth' %>
+          </div>
+
+          <div class="field">
+            <%= form.hidden_field :restaurant_id %>
+          </div>
+
+          <div class="actions">
+            <%= form.submit %>
+          </div>
+
+        <% end %>
+
+      </div>
+
+      <%= link_to 'Back', restaurants_path, class: 'button' %>
+      <% if user_signed_in? && current_user.admin %>
+        <%= link_to 'Edit', edit_restaurant_path(@restaurant), class: 'button' %>
+      <% end %>
+
+      </div>
+
+    <% end %>
+
+    </section>

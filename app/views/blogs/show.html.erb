@@ -1,0 +1,129 @@
+<% provide(:title, @blog.title) %>
+<% provide(:page, 'Blog')  %>
+
+
+<section class="blog">
+
+  <article class="details-container single">
+
+    <header class="entry-header">
+      <h2 class="entry-title">
+        <%= @blog.title %><br>
+        <% if @blog.comments.any? %>
+          <%= ('<span class="genericons-neue-star"></span>' * @blog.comments.average(:rating)).html_safe %>
+        <% end %>
+      </h2>
+    </header>
+
+    <footer class="entry-meta entry-meta-top">
+      <span class="entry-date entry-meta-element">
+        Published:
+        <time datetime="<%= @blog.published_date %>"
+              title="<%= @blog.published_date.strftime('%m/%d/%Y at %I:%M %p') %>">
+          <%= time_ago_in_words @blog.published_date %> ago
+        </time>
+      </span>
+      <span class="author entry-meta-element">
+          Written by: <%= @blog.author %>
+        </span>
+    </footer>
+
+    <div class="entry-content">
+      <p><%= @blog.content.html_safe %></p>
+    </div>
+
+    <% if current_user.try(:admin?) %>
+
+      <footer class="entry-meta entry-meta-bottom">
+        <span class="entry-meta-element">
+          <b>Created: </b>
+          <%= time_tag @blog.created_at, format: '%m/%d/%Y at %I:%M %p' %>
+        </span>
+
+        <span class="entry-meta-element">
+          <b>Modified: </b>
+          <%= time_tag @blog.updated_at, format: '%m/%d/%Y at %I:%M %p' %>
+        </span>
+      </footer>
+
+    <% end %>
+
+    <div class="links">
+      <%= link_to 'All posts', blogs_path, class: 'button' %>
+      <% if current_user.try(:admin?) %>
+        <%= link_to 'New post', new_blog_path, class: 'button' %>
+        <%= link_to 'Edit post', edit_blog_path, class: 'button' %>
+      <% end %>
+    </div>
+
+    <div class="comments-area">
+      <h3 class="comments-title">
+        <%= pluralize(@blog.comments.count, 'comment') %>
+      </h3>
+      <ul class="comment-list">
+
+        <% @blog.comments.each do |comment| %>
+          <li class="comment bypostauthor">
+            <article class="comment-body">
+              <footer class="comment-meta">
+                <div class="comment-author">
+                  <% if comment.avatar.blank? %>
+                    <span id="no-avatar"></span>
+                <% else %>
+                    <%= image_tag comment.avatar, id: 'avatar_img' %>
+                <% end %>
+                  <b><%= comment.author %></b> says:
+                </div>
+                <div class="comment-metadata">
+                  <time datetime="<%= comment.created_at %>"
+                        title="<%= comment.created_at %>">
+                    <%= time_ago_in_words comment.created_at %> ago
+                  </time>
+                </div>
+              </footer>
+              <div class="comment-content">
+                <p><%= comment.content %></p>
+              </div>
+              <div>
+                <%= ('<span class="genericons-neue-star"></span>' * comment.rating).html_safe %>
+              </div>
+            </article>
+          </li>
+        <% end %>
+
+      </ul>
+
+      <div class="comment-respond">
+        <h4 class="comment-reply-title">Leave a reply</h4>
+
+        <%= form_for [@blog, @blog.comments.build] do |form| %>
+          <p class="comment-form-comment">
+            <%= form.label :content, 'Comment (required)' %>
+            <%= form.text_area :content, cols: '30', rows: 5, id: 'content', class: 'fullwidth' %>
+          </p>
+          <p class="comment-form-author">
+            <%= form.label :author, 'Author (required)' %>
+            <%= form.text_field :author, id: 'author', size: '30' %>
+          </p>
+          <p class="comment-form-email">
+            <%= form.label :avatar %>
+            <%= form.text_field :avatar, id: 'avatar'%>
+          </p>
+          <p class="comment-form-author fullwidth">
+            <%= form.label :rating, 'Rating (required)', class: 'fullwidth' %>
+            <%= form.select :rating,  options_for_select( (1..5) ), include_blank: true, size: '30'%>
+          </p>
+          <p class="form-submit">
+            <%= form.submit %>
+            <%= form.hidden_field :blog_id %>
+          </p>
+        <% end %>
+
+      </div>
+
+    </div>
+
+  </article>
+
+
+</section>

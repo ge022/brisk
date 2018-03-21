@@ -1,0 +1,23 @@
+<% provide(:title, 'Restaurants') %>
+
+<section class="restaurants">
+  <div class="section-header">
+    <h2>Restaurants</h2>
+  </div>
+
+  <div>
+    <table>
+        <tr>
+          <th>Restaurant</th>
+          <th>Rating</th>
+        </tr>
+      <% @restaurants.each do |restaurant, rating|  %>
+        <tr>
+          <td><%= restaurant %></td>
+          <td><%= rating %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+
+</section>

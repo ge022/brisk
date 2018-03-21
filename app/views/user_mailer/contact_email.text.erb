@@ -1,0 +1,13 @@
+Contact request from <%= @name %>
+
+Email: <%= @email %>
+Phone: <%= @phone %>
+Preferred contact method: <%= if @to
+                                @to
+                              else 'email' end %>
+Asking about: <%= @selected_product %>
+Newsletter: <%= @newsletter %>
+Notifications: <%= @notifications %>
+
+Question:
+<%= @question %>

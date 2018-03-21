@@ -1,0 +1,48 @@
+<% provide(:title, 'Blog') %>
+<% provide(:page, 'Blog')  %>
+
+<section class="index">
+
+  <div class="section-header">
+    <h2>Blog</h2>
+  </div>
+
+  <% if current_user.try(:admin?) %>
+    <%= link_to 'New Post', new_blog_path, class: 'button' %>
+  <% end %>
+
+  <div class="table-wrapper">
+
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Content</th>
+          <th>Published date</th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @blogs.each do |blog| %>
+          <tr>
+            <td><%= blog.title %></td>
+            <td><%= blog.author %></td>
+            <td><%= blog.content.html_safe %></td>
+            <td><%= blog.published_date.strftime('%m/%d/%Y at %I:%M %p') %></td>
+            <td><%= link_to 'Show', blog %></td>
+            <% if current_user.try(:admin?) %>
+              <td><%= link_to 'Edit', edit_blog_path(blog) %></td>
+              <td><%= link_to 'Destroy', blog, method: :delete, data: {confirm: 'Are you sure?'} %></td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+  </div>
+
+  <%= paginate @blogs %>
+
+</section>

@@ -1,0 +1,16 @@
+<% provide(:title, 'Blog') %>
+<% provide(:page, 'Blog')  %>
+
+<section class="new">
+
+  <div class="section-header">
+    <h2>Write a new blog</h2>
+  </div>
+
+  <div class="form-wrapper">
+
+    <%= render 'form', blog: @blog %>
+
+  </div>
+
+</section>
